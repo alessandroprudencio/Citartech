@@ -1,5 +1,6 @@
 <template>
-   <v-form>
+  <div>
+     <v-form>
     <v-container>
       <v-layout row wrap>
         <v-flex xs12 sm6 md12>
@@ -11,51 +12,88 @@
           ></v-text-field>
         </v-flex>
         
-         <v-flex xs12 sm10 offset-sm1>
-      <v-card >
-        <v-list three-line>
-          <template  v-for="(item, index) in dados" >
-            <v-subheader
-              v-if="item.header"
-              :key="item.header"
-            >
-              {{ item.title }}
-            </v-subheader>
 
-            <v-divider
-              v-else-if="item.divider"
-              :key="index"
-              :inset="item.inset"
-            ></v-divider>
+        <v-flex xs12 sm10 offset-sm1>
 
-            <v-list-tile
-              v-else
+          <v-expansion-panel>
+    <v-expansion-panel-content  v-for="item in dados" :key="item.id" >
+      <template v-slot:actions>
+        <v-icon color="primary">$vuetify.icons.expand</v-icon>
+      </template>
+      <template v-slot:header >
+          <div>
+             <v-btn
+        small
+      color="#2cbe4e"
+      class="white--text"
+    >
+       Open
+      <v-icon right> info</v-icon>
+    </v-btn>
+          </div>
+         <h3>{{item.title}}</h3>
+      </template>
+      <v-card>
+        <v-card-text class="grey lighten-3">
+             <v-list-tile
               :key="item.title"
               avatar
             >
-            
               <v-list-tile-avatar>
                 <img :src="item.user.avatar_url">
               </v-list-tile-avatar>
-
               <v-list-tile-content>
-                <v-list-tile-title v-html="item.title"></v-list-tile-title><span style="color:red">{{item.state}} </span>
-                <span v-for="label in labels" :key="label.name"> {{label.name}} </span>
-                <v-list-tile-sub-title v-html="item.user.login"></v-list-tile-sub-title>
-              </v-list-tile-content>
-              
-            </v-list-tile>
-            
-          </template>
-          
-        </v-list>
-        
-      </v-card>
-    </v-flex>
+                <v-list-tile-title v-html="item.user.login"></v-list-tile-title>
+               
 
+              </v-list-tile-content>
+                   {{item.created_at | moment("DD/MM/YYYY h:mm:ss a")}}
+
+            </v-list-tile>
+
+                  <v-divider></v-divider><br>
+               
+
+                {{item.body}}<br><br>
+                  
+                   <v-btn
+                      v-for="(label, index) in item.labels"
+                      :key="index.title"
+                      small
+                    :color="'#'+label.color"
+                  >
+                    {{label.name}}
+                  </v-btn
+                    <v-list>
+                         <v-list-tile>
+                
+                      <v-list-tile-content>
+                      </v-list-tile-content>
+
+                      <v-list-tile-action>
+                        <v-btn flat >
+                            <h3>{{item.comments }}</h3>
+                      <v-icon :color="item.comments ? 'teal' : 'grey'">chat_bubble</v-icon>
+                        </v-btn>
+                      </v-list-tile-action>
+
+                    </v-list-tile>
+                  </v-list>
+          </v-card-text>
+      </v-card>
+    </v-expansion-panel-content>
+  </v-expansion-panel>
+
+      
+        </v-flex>
+
+        
       </v-layout>
     </v-container>
    </v-form>
+
+  </div>
+  
 
 </template>
 
@@ -68,67 +106,7 @@ let access_token = 'access_token=a5eb14a4d7b3288fc7948bd3fc97e279c85ceb70'
   export default {
     data: () => ({
          dados:{},
-         labels:[],
-         items: [
-          { header: 'Today' },
-          {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-            title: 'Brunch this weekend?',
-            subtitle: "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
-          },
-          { divider: true, inset: true }
-        ],
-      ecosystem: [
-        {
-          text: 'vuetify-loader',
-          href: 'https://github.com/vuetifyjs/vuetify-loader'
-        },
-        {
-          text: 'github',
-          href: 'https://github.com/vuetifyjs/vuetify'
-        },
-        {
-          text: 'awesome-vuetify',
-          href: 'https://github.com/vuetifyjs/awesome-vuetify'
-        }
-      ],
-      importantLinks: [
-        {
-          text: 'Documentation',
-          href: 'https://vuetifyjs.com'
-        },
-        {
-          text: 'Chat',
-          href: 'https://community.vuetifyjs.com'
-        },
-        {
-          text: 'Made with Vuetify',
-          href: 'https://madewithvuetifyjs.com'
-        },
-        {
-          text: 'Twitter',
-          href: 'https://twitter.com/vuetifyjs'
-        },
-        {
-          text: 'Articles',
-          href: 'https://medium.com/vuetify'
-        }
-      ],
-      whatsNext: [
-        {
-          text: 'Explore components',
-          href: 'https://vuetifyjs.com/components/api-explorer'
-        },
-        {
-          text: 'Select a layout',
-          href: 'https://vuetifyjs.com/layout/pre-defined'
-        },
-        {
-          text: 'Frequently Asked Questions',
-          href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions'
-        }
-
-      ]
+         labels:[],                                   
     }),
     methods:{
       buscaIssue(){
@@ -142,3 +120,15 @@ let access_token = 'access_token=a5eb14a4d7b3288fc7948bd3fc97e279c85ceb70'
   }
 </script>
 
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active em versões anteriores a 2.1.8 */ {
+  opacity: 0;
+}
+.btn{
+  color: aqua;
+}
+
+</style>

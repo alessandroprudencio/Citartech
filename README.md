@@ -15,8 +15,13 @@ npm run dev
 npm run build
 ```
 
-
 #tests 
 > Mocha é um Framework JavaScript que roda no NodeJS e também no próprio browser que permite realizar suites de teste de forma rapida e facil em sua aplicações JavaScript.
 
 > Chai e uma lib baseada em BDD/TDD para NodeJS e também para browser que pode ser combinada com qualquer Framework deve testes JavaScript. Chai fornece ao desenvolvedor diversas estilos para aplicar BDD e TDD as suas suítes de teste.
+
+#Framework front
+O Vuetify é um framework responsivo em Vue, baseado no Material Design. Já possui uma boa gama de componentes e uma documentação sólida.
+
+# url da api
+https://api.github.com/repos/:owner/:repo/issues
