@@ -2,8 +2,6 @@
   <v-app>
     <v-content>
       <HelloWorld/>
-      <ListIssues/>
-
     </v-content>
   </v-app>
 </template>
