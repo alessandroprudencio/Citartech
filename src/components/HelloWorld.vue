@@ -14,10 +14,15 @@
                       </v-flex>
 
                       <v-flex xs12 sm6 md6>
-                          <v-text-field v-model="repo" label="Nome Repo" append-icon="search" color="grey lighten-1" @change="buscaIssue"></v-text-field>
+                          <v-text-field v-model="repo" label="Nome Repo"  color="grey lighten-1"></v-text-field>
                       </v-flex>
 
-
+                        <v-flex class="btnSearch" xs12 sm6 md2>
+                           <v-btn @click="buscaIssue" small color="primary" class="white--text">
+                                              Buscar
+                                              <v-icon right> search</v-icon>
+                                          </v-btn>
+                        </v-flex>
                       <v-flex xs12 sm10 offset-sm1>
 
                           <v-expansion-panel>
@@ -45,7 +50,7 @@
                                                   <v-list-tile-title v-html="item.user.login"></v-list-tile-title>
 
                                               </v-list-tile-content>
-                                              {{item.created_at | moment("DD/MM/YYYY h:mm:ss a")}}
+                                              {{item.created_at | moment("DD/MM/YYYY h:mm a")}}
 
                                           </v-list-tile>
 
@@ -138,7 +143,14 @@
                               </v-card>
                           </v-dialog>
                       </v-layout>
-
+  <div 
+    v-if="dados.length"  
+  class="text-xs-center">
+    <v-pagination
+      v-model="page"
+      :length="6"
+    ></v-pagination>
+  </div>
                   </v-layout>
 
               </v-container>
@@ -174,6 +186,7 @@
               reposUser:[],
               alert: false,
               label: '',
+              page:'',
               dialog: false,
               notifications: false,
               sound: true,
@@ -181,7 +194,8 @@
           }),
           methods: {
               buscaIssue() {
-                      axios.get(`${urlPadrao + this.owner + '/' + this.repo}/issues?${client_id}&${client_secret}`)
+                if(this.page)this.page ++
+                      axios.get(`${urlPadrao + this.owner + '/' + this.repo}/issues?${client_id}&${client_secret}?pages=${this.page}`)
                           .then(res => {
                               this.dados = res.data
                               this.erro = ''
@@ -228,5 +242,8 @@
 
       .btn {
           color: aqua;
+      }
+      .btnSearch{
+        margin-left:5%;
       }
   </style>
