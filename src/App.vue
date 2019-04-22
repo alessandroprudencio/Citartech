@@ -8,13 +8,11 @@
 
 <script>
 import HelloWorld from './components/HelloWorld'
-import ListIssues from './components/ListIssues'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-    ListIssues
+    HelloWorld
   },
   data () {
     return {
